@@ -1,0 +1,16 @@
+* {
+  --main-font: "fira sans";
+  font-family: var(--main-font), monospace;
+  box-sizing: border-box;
+}
+
+body {
+  width: 70vw;
+  margin: 0 auto;
+}
+
+h1:first-child {
+  text-align: center;
+  padding-block-end: .2em;
+  border-block-end: .1em solid coral;
+}
