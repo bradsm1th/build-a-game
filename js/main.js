@@ -9,15 +9,15 @@ const IMAGE_LOOKUP = {
   'r': {
     image: 'images/rock.png',
     beats: 's',
-},
+  },
   'p': {
     image: 'images/paper.png',
     beats: 'r',
-},
+  },
   's': {
     image: 'images/scissors.png',
     beats: 'p',
-}
+  }
 }
 
 /*----- app's state (variables) -----*/
@@ -39,6 +39,7 @@ let outcome;
 /*----- cached element references -----*/
 const playerResultEl = document.querySelector('#p-result');
 const computerResultEl = document.querySelector('#c-result');
+const countdownEl = document.querySelector('#countdown');
 
 
 /*----- event listeners -----*/
@@ -60,7 +61,11 @@ function getRandomRPS() {
 }
 
 function getWinner() {
+  // handle a tie
+  if (results.p === results.c) return 't';
 
+  // if it's not a tie, then somebody won, so there's only 2 choices...aka USE A TERNARY
+  return (IMAGE_LOOKUP[results.p].beats === results.c) ? 'p' : 'c';
 }
 
 function handleChoice(evt) {
@@ -75,6 +80,9 @@ function handleChoice(evt) {
 
   // figure out who won
   outcome = getWinner();
+
+  // update the scores
+  scores[outcome]++;
 
   // (re)render the DOM
   render();
@@ -110,10 +118,35 @@ function renderScores() {
 function renderResults() {
   playerResultEl.src = IMAGE_LOOKUP[results.p].image;
   computerResultEl.src = IMAGE_LOOKUP[results.c].image;
+  // update border for winner using another ternary
+  playerResultEl.style.borderColor = (outcome === 'p' ? 'var(--winner-color)' : 'white');
+  computerResultEl.style.borderColor = (outcome === 'c' ? 'var(--winner-color)' : 'white');
 }
 
 function render() {
-  renderScores();
+  renderCountdown(function () {
 
-  renderResults();
+    renderScores();
+    renderResults();
+  });
+
+}
+
+function renderCountdown(callBack) {
+  let count = 3;
+  AUDIO.currentTime = 0;
+  // AUDIO.play();
+  countdownEl.style.visibility = 'visible';
+  countdownEl.innerText = count;
+  
+  const timerId = setInterval(function(){
+    count--;
+    if (count) {
+      countdownEl.innerText = count;
+    } else {
+      clearInterval(timerId);
+      countdownEl.style.visibility = 'hidden';
+      callBack();
+    }
+  }, 1000);
 }

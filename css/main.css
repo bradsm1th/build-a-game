@@ -2,6 +2,9 @@
   --main-font: "ubuntu";
   font-family: var(--main-font), sans-serif;
   box-sizing: border-box;
+
+  --winner-color: goldenrod;
+  --loser-color: gray;
 }
 
 body {
