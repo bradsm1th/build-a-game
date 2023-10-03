@@ -1,5 +1,5 @@
 /*******************************
-// part 1
+// part 1, 2
 /******************************/
 /*----- constants -----*/
 const AUDIO = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-simple-countdown-922.mp3');
@@ -49,5 +49,5 @@ function init() {
 }
 
 function render() {
-  
+
 }
