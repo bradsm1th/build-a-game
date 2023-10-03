@@ -6,9 +6,18 @@ const AUDIO = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-simple-coun
 
 
 const IMAGE_LOOKUP = {
-  'r': 'images/rock.png',
-  'p': 'images/paper.png',
-  's': 'images/scissors.png',
+  'r': {
+    image: 'images/rock.png',
+    beats: 's',
+},
+  'p': {
+    image: 'images/paper.png',
+    beats: 'r',
+},
+  's': {
+    image: 'images/scissors.png',
+    beats: 'p',
+}
 }
 
 /*----- app's state (variables) -----*/
@@ -51,7 +60,7 @@ function getRandomRPS() {
 }
 
 function getWinner() {
-  
+
 }
 
 function handleChoice(evt) {
@@ -99,8 +108,8 @@ function renderScores() {
 }
 
 function renderResults() {
-  playerResultEl.setAttribute('src', `${IMAGE_LOOKUP[results.p]}`);
-  computerResultEl.src = IMAGE_LOOKUP[results.c];
+  playerResultEl.src = IMAGE_LOOKUP[results.p].image;
+  computerResultEl.src = IMAGE_LOOKUP[results.c].image;
 }
 
 function render() {
