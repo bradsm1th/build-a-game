@@ -13,17 +13,17 @@ const IMAGE_LOOKUP = {
 
 /*----- app's state (variables) -----*/
 
-// {}. 
+// {}
 // keys:    'p' == player, 't' == tie, 'c' == computer
 // values:  0,1,2…n
 let scores;
 
-// {}. 
+// {}
 // keys:    'p'layer, 'c'omputer
 // values:  'r'ock, 'p'aper, 's'cissors
-let results;
+let results; // think 'choices'
 
-// ''.
+// ''
 // 'p'layer, 't'ie, 'c'omputer
 let outcome;
 
@@ -33,10 +33,44 @@ const computerResultEl = document.querySelector('#c-result');
 
 
 /*----- event listeners -----*/
+document.querySelector('main')
+  .addEventListener('click', handleChoice);
 
 
 /*----- functions -----*/
 init();
+
+function getRandomRPS() {
+  // [] … returns an array
+  const compChoice = Object.keys(IMAGE_LOOKUP);
+
+  // # … returns an integer
+  const randomIndex = Math.floor(Math.random() * compChoice.length);
+
+  return compChoice[randomIndex];
+}
+
+function getWinner() {
+  
+}
+
+function handleChoice(evt) {
+  // create "guard" if evt.target isn't a button el
+  if (evt.target.tagName !== "BUTTON") return;
+
+  // update player choice/state
+  results.p = evt.target.innerText.toLowerCase();
+
+  // compute random choice for computer…use named function
+  results.c = getRandomRPS();
+
+  // figure out who won
+  outcome = getWinner();
+
+  // (re)render the DOM
+  render();
+}
+
 
 // initialize all state and call render()
 function init() {
@@ -74,4 +108,3 @@ function render() {
 
   renderResults();
 }
-
